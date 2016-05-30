@@ -2,7 +2,7 @@ splitLines :: String -> [String]
 splitLines [] = []
 splitLines xs =
     let (pre, suf) = break isLineTerminator xs
-     in pre : case suf of
+    in pre : case suf of
                 ('\r':'\n':rest) -> splitLines rest
                 ('\r':rest) -> splitLines rest
                 ('\n':rest) -> splitLines rest
