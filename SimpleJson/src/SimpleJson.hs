@@ -1,4 +1,4 @@
-module Json
+module SimpleJson
   (
     JVal (..)
   , getStr
