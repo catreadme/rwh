@@ -43,3 +43,7 @@ tailSum' xs = foldl (+) 0 xs
 concatf :: [[a]] -> [a]
 concatf [[]] = []
 concatf xxs = foldr (\(xs) s -> xs ++ s) [] xxs
+
+tails' :: [a] -> [[a]]
+tails' [] = [[]]
+tails' whole@(x:xs) = whole : tails' xs
