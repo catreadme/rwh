@@ -32,3 +32,7 @@ myAction tempname temph =
 
      pos' <- hTell temph
      putStrLn $ "After writing, position is " ++ show pos'
+
+     hSeek temph AbsoluteSeek 0
+     contents <- hGetContents temph
+     putStr $ "Content: " ++  contents
