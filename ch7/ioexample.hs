@@ -4,6 +4,18 @@ import System.Directory
 main :: IO ()
 main = withTempFile "mytemp.txt" myAction
 
+withTempFile :: String -> (FilePath -> Handle -> IO a) -> IO a
+withTempFile pattern func =
+  do tempdir <- getTemporaryDirectory
+     (tempfile, temph) <- openTempFile tempdir pattern
+
+     res <- func tempfile temph
+
+     hClose temph
+     removeFile tempfile
+
+     return res
+
 myAction :: FilePath -> Handle -> IO ()
 myAction tempname temph =
   do putStrLn "Welcome"
@@ -20,12 +32,3 @@ myAction tempname temph =
 
      pos' <- hTell temph
      putStrLn $ "After writing, position is " ++ show pos'
-
-withTempFile :: String -> (FilePath -> Handle -> IO a) -> IO a
-withTempFile pattern func =
-  do tempdir <- getTemporaryDirectory
-     (tempfile, temph) <- openTempFile tempdir pattern
-     res <- func tempfile temph
-     hClose temph
-     removeFile tempfile
-     return res
